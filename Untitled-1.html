@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confecciones Nishaemia - Alta Costura & Diseños Exclusivos</title>
+
+  <!-- Bootstrap 5 CSS CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Fonts: Playfair Display + Montserrat -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Estilos Personalizados CSS -->
+  <style>
+    :root {
+      --primary-dark: #1e0d15;
+      --burgundy-vivid: #800e35;
+      --rose-gold: #e8a87c;
+      --gold-accent: #f7d070;
+      --fuchsia-accent: #c71585;
+      --bg-cream: #fdf8f5;
+      --card-white: #ffffff;
+      --whatsapp-color: #25d366;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--bg-cream);
+      color: var(--primary-dark);
+    }
+
+    h1, h2, h3, h4, .brand-font {
+      font-family: 'Playfair Display', serif;
+    }
+
+    /* Encabezado Principal */
+    .hero-header {
+      background: linear-gradient(135deg, rgba(30, 13, 21, 0.92) 0%, rgba(128, 14, 53, 0.88) 50%, rgba(199, 21, 133, 0.8) 100%), 
+                  url('https://images.unsplash.com/photo-1558769132-cb1aea458c5e?q=80&w=1200&auto=format&fit=crop') center/cover no-repeat;
+      color: #ffffff;
+      padding: 5rem 1rem 4rem 1rem;
+      border-bottom: 5px solid var(--gold-accent);
+      position: relative;
+      box-shadow: 0 10px 30px rgba(128, 14, 53, 0.3);
+    }
+
+    .hero-title {
+      font-size: 3.2rem;
+      letter-spacing: 2.5px;
+      font-weight: 700;
+      background: linear-gradient(45deg, #ffffff, var(--gold-accent), var(--rose-gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+
+    .gold-text {
+      color: var(--gold-accent);
+    }
+
+    /* Botón flotante de Administrador */
+    .btn-admin-access {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      border: 1px solid var(--gold-accent);
+      color: var(--gold-accent);
+      background: rgba(0,0,0,0.5);
+      padding: 6px 14px;
+      font-size: 0.8rem;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn-admin-access:hover {
+      background: var(--gold-accent);
+      color: var(--primary-dark);
+      font-weight: bold;
+    }
+
+    /* BOTÓN FLOTANTE DE WHATSAPP */
+    .whatsapp-float {
+      position: fixed;
+      width: 60px;
+      height: 60px;
+      bottom: 25px;
+      right: 25px;
+      background-color: var(--whatsapp-color);
+      color: #FFF;
+      border-radius: 50px;
+      text-align: center;
+      font-size: 32px;
+      box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .whatsapp-float:hover {
+      transform: scale(1.12);
+      color: #FFF;
+      box-shadow: 0 12px 30px rgba(37, 211, 102, 0.7);
+    }
+
+    /* Botones de Categoría (Filtro) */
+    .filter-btn {
+      border: 2px solid var(--burgundy-vivid);
+      background-color: transparent;
+      color: var(--burgundy-vivid);
+      font-weight: 600;
+      border-radius: 25px;
+      padding: 8px 18px;
+      margin: 4px;
+      transition: all 0.3s ease;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      background: linear-gradient(45deg, var(--burgundy-vivid), var(--fuchsia-accent));
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(128, 14, 53, 0.3);
+    }
+
+    /* Tarjetas de Galería */
+    .card-fashion {
+      border: none;
+      border-radius: 16px;
+      box-shadow: 0 15px 35px rgba(128, 14, 53, 0.1);
+      background-color: var(--card-white);
+      border-top: 5px solid var(--burgundy-vivid);
+    }
+
+    .gallery-img-container {
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .gallery-img-container::after {
+      content: '\f002 Ampliar Foto';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(128, 14, 53, 0.6);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+    }
+
+    .gallery-img-container:hover::after {
+      opacity: 1;
+    }
+
+    .gallery-img {
+      height: 270px;
+      width: 100%;
+      object-fit: cover;
+      border-radius: 12px 12px 0 0;
+      transition: transform 0.4s ease;
+    }
+
+    .gallery-card:hover .gallery-img {
+      transform: scale(1.06);
+    }
+
+    .gallery-card {
+      border: 1px solid #ebd8ce;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .gallery-card:hover {
+      box-shadow: 0 12px 25px rgba(199, 21, 133, 0.2);
+      border-color: var(--burgundy-vivid);
+    }
+
+    .category-badge {
+      background: linear-gradient(45deg, var(--burgundy-vivid), var(--fuchsia-accent));
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 15px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-delete-card {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(220, 53, 69, 0.85);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: background 0.2s;
+    }
+
+    .btn-delete-card:hover {
+      background: rgba(220, 53, 69, 1);
+    }
+
+    .form-label {
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--burgundy-vivid);
+    }
+
+    .form-control, .form-select {
+      border-radius: 8px;
+      border: 1px solid #e0c8b9;
+      padding: 0.75rem 1rem;
+      font-size: 0.95rem;
+    }
+
+    .form-control:focus, .form-select:focus {
+      border-color: var(--burgundy-vivid);
+      box-shadow: 0 0 0 0.25rem rgba(128, 14, 53, 0.2);
+    }
+
+    .upload-box {
+      background-color: #fcf4ee;
+      border: 2px dashed var(--rose-gold);
+      padding: 1.2rem;
+      border-radius: 10px;
+    }
+
+    .btn-fashion {
+      background: linear-gradient(45deg, var(--burgundy-vivid), var(--fuchsia-accent));
+      color: #ffffff;
+      border: none;
+      padding: 0.9rem 2.5rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      border-radius: 30px;
+      box-shadow: 0 6px 18px rgba(128, 14, 53, 0.3);
+    }
+
+    .btn-fashion:hover {
+      background: linear-gradient(45deg, var(--fuchsia-accent), var(--burgundy-vivid));
+      color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(199, 21, 133, 0.4);
+    }
+
+    .btn-whatsapp-header {
+      background-color: var(--whatsapp-color);
+      color: white;
+      font-weight: bold;
+      border-radius: 25px;
+      padding: 8px 20px;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+
+    .btn-whatsapp-header:hover {
+      background-color: #1eb954;
+      color: white;
+      transform: scale(1.05);
+    }
+
+    /* Panel de Administrador */
+    #panelAdmin {
+      display: none;
+      background-color: var(--primary-dark);
+      color: #ffffff;
+      border-radius: 16px;
+      border: 2px solid var(--gold-accent);
+    }
+
+    footer {
+      background: linear-gradient(135deg, var(--primary-dark), #330d1d);
+      color: #e0d0d8;
+      padding: 2.8rem 0;
+      margin-top: 4rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BOTÓN FLOTANTE DIRECTO A WHATSAPP -->
+  <a href="https://wa.me/573001234567?text=Hola%20Confecciones%20Nishaemia,%20quiero%20cotizar%20un%20diseño%20a%20la%20medida" 
+     class="whatsapp-float" 
+     target="_blank" 
+     title="Escríbenos por WhatsApp">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <!-- Encabezado -->
+  <header class="hero-header text-center">
+    <button class="btn btn-admin-access" onclick="accesoAdministrador()">
+      <i class="fa-solid fa-lock me-1"></i> Modo Administrador
+    </button>
+
+    <div class="container">
+      <span class="text-uppercase tracking-widest gold-text fw-bold d-block mb-2">Taller de Confección & Alta Costura</span>
+      <h1 class="hero-title mb-2">CONFECCIONES NISHAEMIA</h1>
+      <p class="lead mx-auto font-light mb-4" style="max-width: 750px; font-size: 1.15rem;">
+        Diseño exclusivo a la medida: Vestidos de 15 Años, Moda Cristiana, Vestidos de Baño, Ropa Infantil, Moda & Tendencia.
+      </p>
+
+      <div class="mt-2">
+        <a href="https://wa.me/573001234567?text=Hola%20Confecciones%20Nishaemia,%20deseo%20más%20información" target="_blank" class="btn-whatsapp-header shadow">
+          <i class="fa-brands fa-whatsapp me-2 fs-5"></i> Escríbenos al WhatsApp: +57 300 123 4567
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Cuerpo Principal -->
+  <main class="container my-5">
+    
+    <!-- PANEL PRIVADO DE ADMINISTRADOR -->
+    <div id="panelAdmin" class="p-4 p-md-5 mb-5 shadow-lg">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="h4 gold-text m-0"><i class="fa-solid fa-user-gear me-2"></i> Panel de Administración - Agregar Nueva Moda</h3>
+        <button type="button" class="btn btn-sm btn-outline-light rounded-circle" onclick="cerrarAdmin()">✕</button>
+      </div>
+      <p class="small text-muted mb-4">Sube la foto y detalles de tus nuevas prendas para que tus clientes las vean en tiempo real en la pantalla principal.</p>
+      
+      <form id="formAdminUpload">
+        <div class="row">
+          <div class="col-12 col-md-4 mb-3">
+            <label class="form-label text-light">Categoría del Diseño</label>
+            <select id="adminCategoria" class="form-select" required>
+              <option value="Vestidos de Baño & Playa">Vestidos de Baño / Playa</option>
+              <option value="15 Años & Quinceañera">Vestidos de 15 Años</option>
+              <option value="Moda Cristiana / Modesta">Moda Cristiana / Modesta</option>
+              <option value="Confección Infantil">Ropa de Niños / Niñas</option>
+              <option value="Moda & Tendencia">Moda & Tendencia Femenina</option>
+              <option value="Colección Nupcial">Vestidos de Novia</option>
+            </select>
+          </div>
+          <div class="col-12 col-md-4 mb-3">
+            <label class="form-label text-light">Título de la Prenda</label>
+            <input type="text" id="adminTitulo" class="form-control" placeholder="Ej. Vestido Gala Quinceañera" required>
+          </div>
+          <div class="col-12 col-md-4 mb-3">
+            <label class="form-label text-light">Subir Foto de la Prenda</label>
+            <input type="file" id="adminFoto" class="form-control" accept="image/*" required>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label text-light">Descripción o Detalles</label>
+          <textarea id="adminDescripcion" class="form-control" rows="2" placeholder="Especifica telas, detalles, tallas o colores disponibles..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-fashion btn-sm"><i class="fa-solid fa-cloud-arrow-up me-1"></i> Publicar en Pantalla Principal</button>
+      </form>
+    </div>
+
+    <!-- SECCIÓN DE GALERÍA DE PRODUCTOS Y FILTROS POR CATEGORÍA -->
+    <section class="mb-5">
+      <div class="text-center mb-4">
+        <h2 class="h3 gold-text fw-bold">Catálogo & Especialidades Nishaemia</h2>
+        <p class="text-muted small">Haz clic en cualquier categoría para filtrar únicamente las fotos de esa sección, o haz clic en una foto para verla en tamaño completo.</p>
+        
+        <!-- BOTONES DE FILTRADO POR SECCIÓN -->
+        <div class="d-flex flex-wrap justify-content-center my-3" id="contenedorFiltros">
+          <button class="filter-btn active" onclick="filtrarCategoria('Todas')">Ver Todas</button>
+          <button class="filter-btn" onclick="filtrarCategoria('15 Años & Quinceañera')">15 Años</button>
+          <button class="filter-btn" onclick="filtrarCategoria('Moda Cristiana / Modesta')">Moda Cristiana</button>
+          <button class="filter-btn" onclick="filtrarCategoria('Vestidos de Baño & Playa')">Vestidos de Baño</button>
+          <button class="filter-btn" onclick="filtrarCategoria('Moda & Tendencia')">Moda & Tendencia</button>
+          <button class="filter-btn" onclick="filtrarCategoria('Confección Infantil')">Ropa Infantil</button>
+          <button class="filter-btn" onclick="filtrarCategoria('Colección Nupcial')">Novias</button>
+        </div>
+        
+        <hr class="w-25 mx-auto text-muted">
+      </div>
+
+      <!-- Contenedor dinámico donde se cargan los productos -->
+      <div class="row g-4" id="galeriaProductos">
+        <!-- Se llena dinámicamente con JavaScript -->
+      </div>
+    </section>
+
+    <!-- FORMULARIO DE SOLICITUD DE CLIENTES -->
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-10 col-lg-8">
+        <div class="card card-fashion p-4 p-md-5">
+          <div class="text-center mb-4">
+            <h2 class="h3 gold-text fw-bold">Agenda Tu Cita / Pedido de Confección</h2>
+            <p class="text-muted small">Completa tus datos o contáctanos directamente a nuestro WhatsApp oficial.</p>
+            <hr class="w-25 mx-auto text-muted">
+          </div>
+          
+          <form class="needs-validation" novalidate>
+            <div class="mb-4">
+              <label for="nombre" class="form-label">Nombre Completo *</label>
+              <div class="input-group">
+                <span class="input-group-text bg-white"><i class="fa-solid fa-user text-muted"></i></span>
+                <input type="text" class="form-control" id="nombre" placeholder="Ej. Andrea Gómez" required pattern="[A-Za-zÁeíóúÁÉÍÓÚñÑ ]{3,60}">
+                <div class="invalid-feedback">Ingresa tu nombre completo.</div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12 col-md-6 mb-4">
+                <label for="email" class="form-label">Correo Electrónico *</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-white"><i class="fa-solid fa-envelope text-muted"></i></span>
+                  <input type="email" class="form-control" id="email" placeholder="cliente@correo.com" required>
+                  <div class="invalid-feedback">Ingresa un correo electrónico válido.</div>
+                </div>
+              </div>
+
+              <div class="col-12 col-md-6 mb-4">
+                <label for="telefono" class="form-label">Número de WhatsApp *</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-white"><i class="fa-brands fa-whatsapp text-success fs-5"></i></span>
+                  <input type="tel" class="form-control" id="telefono" placeholder="3001234567" required pattern="[0-9]{10}">
+                  <div class="invalid-feedback">Ingresa un número de teléfono a 10 dígitos.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label for="servicio" class="form-label">Línea de Confección *</label>
+              <select class="form-select" id="servicio" required>
+                <option selected disabled value="">Selecciona el tipo de diseño que necesitas...</option>
+                <option value="vestidos_bano">Vestidos de Baño / Ropa de Playa</option>
+                <option value="15anos">Vestido de 15 Años / Quinceañera</option>
+                <option value="cristiana">Moda Cristiana / Vestidos & Faldas Modestas</option>
+                <option value="infantil">Ropa Infantil / Vestidos de Niñas & Bautizos</option>
+                <option value="vestido_noche">Vestido de Fiesta / Gala</option>
+                <option value="novia">Vestido de Novia / Nupcial</option>
+                <option value="conjunto_casual">Moda & Conjuntos Ejecutivos</option>
+                <option value="arreglos">Ajustes & Confección a Medida</option>
+              </select>
+              <div class="invalid-feedback">Selecciona una categoría.</div>
+            </div>
+
+            <div class="row mb-4">
+              <div class="col-12 col-md-6 mb-3 mb-md-0">
+                <div class="upload-box h-100 text-center">
+                  <label for="fotosDiseño" class="form-label">
+                    <i class="fa-solid fa-image text-danger me-1 fs-5"></i> Fotos de Referencia
+                  </label>
+                  <input type="file" class="form-control mt-2" id="fotosDiseño" accept="image/*" multiple>
+                </div>
+              </div>
+
+              <div class="col-12 col-md-6">
+                <div class="upload-box h-100 text-center">
+                  <label for="fotoTela" class="form-label">
+                    <i class="fa-solid fa-scissors text-danger me-1 fs-5"></i> Foto de tu Tela
+                  </label>
+                  <input type="file" class="form-control mt-2" id="fotoTela" accept="image/*">
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label for="detalles" class="form-label">Detalles del Diseño / Medidas</label>
+              <textarea class="form-control" id="detalles" rows="3" placeholder="Describe los detalles, color, largo deseado o edades para ropa de niños..."></textarea>
+            </div>
+
+            <div class="text-center pt-2">
+              <button class="btn btn-fashion shadow-lg" type="submit">
+                <i class="fa-solid fa-paper-plane me-2"></i> Enviar Solicitud de Confección
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- MODAL / VISOR DE IMÁGENES EN TAMAÑO GRANDE -->
+  <div class="modal fade" id="modalVisorFoto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content bg-dark border-0">
+        <div class="modal-header border-0 pb-0">
+          <h5 class="modal-title text-light" id="modalVisorTitulo">Vista de Prenda</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body text-center p-3">
+          <img id="modalVisorImagen" src="" class="img-fluid rounded shadow" style="max-height: 80vh; object-fit: contain;" alt="Diseño de Moda">
+          <p id="modalVisorDescripcion" class="text-light mt-3 small mb-0"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pie de Página -->
+  <footer class="text-center">
+    <div class="container">
+      <h3 class="h4 gold-text brand-font mb-2">CONFECCIONES NISHAEMIA</h3>
+      <p class="mb-2">
+        <a href="https://wa.me/573001234567" target="_blank" class="text-light text-decoration-none">
+          <i class="fa-brands fa-whatsapp text-success me-1"></i> WhatsApp Directo: +57 300 123 4567
+        </a>
+      </p>
+      <p class="mb-1 small">&copy; 2026 Confecciones Nishaemia. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // 1. Colección ampliada de prendas para que haya múltiples fotos por sección
+    const prendasIniciales = [
+      {
+        id: 1,
+        categoria: "15 Años & Quinceañera",
+        titulo: "Vestido 15 Años Princesa Real",
+        descripcion: "Falda amplia en tul con destellos dorados y corset bordado.",
+        imagen: "https://images.unsplash.com/photo-1566174053879-31528523f8ae?q=80&w=600&auto=format&fit=crop",
+        esPersonalizado: false
+      },
+      {
+        id: 2,
+        categoria: "15 Años & Quinceañera",
+        titulo: "Vestido 15 Años Gala Rosa",
+        descripcion: "Diseño corte princesa en tono rosa pastel con pedrería.",
+        imagen: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=600&auto=format&fit=crop",
+        esPersonalizado: false
+      },
+      {
+        id: 3,
+        categoria: "Moda Cristiana / Modesta",
+        titulo: "Vestido Elegante Manga Larga",
+        descripcion: "Diseño modesto con encaje refinado y falda fluida en A.",
+        imagen: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=600&auto=format&fit=crop",
+        esPersonalizado: false
+      },
+      {
+        id: 4,
+        categoria: "Moda Cristiana / Modesta",
+        titulo: "Conjunto Falda Midi y Blusa",
+        descripcion: "Estilo elegante y recatado ideal para cultos y eventos especiales.",
+        imagen: "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=600&auto=format&fit=crop",
+        esPersonalizado: false
+      },
+      {
+        id: 5,
+        categoria: "Vestidos de Baño & Playa",
+        titulo: "Bikini de Traje de Baño Elegante",
+        descripcion: "Excelente ajuste a la medida y telas de secado rápido.",
+        imagen: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=600&auto=format&fit=crop",
+        esPersonalizado: false
+      },
+      {
+        id: 6,
+        categoria: "Vestidos de Baño & Playa",
+        titulo: "Enterizo Playero Exclusivo",
+        descripcion: "Diseño estilizado con escote elegante y control de abdomen.",
+        imagen: "https://images.unsplash.com/photo-1582639510494-c80b517270fa?q=80&w=600&auto=format&fit=crop",
+        esPersonalizado: false
+      },
+      {
+        id: 7,
+        categoria: "Moda & Tendencia",
+        titulo: "Vestido Gala de Noche",
+        descripcion: "Corte moderno, telas brillantes y diseño estilizado.",
+        imagen: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?q=80&w=600&auto=format&fit=crop",
+        esPersonalizado: false
+      },
+      {
+        id: 8,
+        categoria: "Confección Infantil",
+        titulo: "Vestido de Niña para Fiesta / Bautizo",
+        descripcion: "Confección suave en tul y raso para princesas.",
+        imagen: "https://images.unsplash.com/photo-1622290291468-a28f7a7dc6a8?q=80&w=600&auto=format&fit=crop",
+        esPersonalizado: false
+      },
+      {
+        id: 9,
+        categoria: "Colección Nupcial",
+        titulo: "Vestido de Novia Encaje Imperial",
+        descripcion: "Confección a la medida con cola desmontable y fino velo.",
+        imagen: "https://images.unsplash.com/photo-1594552072238-b8a33785b261?q=80&w=600&auto=format&fit=crop",
+        esPersonalizado: false
+      }
+    ];
+
+    let categoriaActual = "Todas";
+
+    // Obtener o guardar datos en localStorage
+    function obtenerPrendas() {
+      const almacenadas = localStorage.getItem('prendasNishaemia_v2');
+      if (!almacenadas) {
+        localStorage.setItem('prendasNishaemia_v2', JSON.stringify(prendasIniciales));
+        return prendasIniciales;
+      }
+      return JSON.parse(almacenadas);
+    }
+
+    // Filtrar prendas según la categoría seleccionada
+    function filtrarCategoria(categoria) {
+      categoriaActual = categoria;
+
+      // Actualizar botones activos
+      const botones = document.querySelectorAll('#contenedorFiltros .filter-btn');
+      botones.forEach(btn => {
+        if (btn.innerText.trim().toLowerCase().includes(categoria.toLowerCase()) || (categoria === 'Todas' && btn.innerText.includes('Ver Todas'))) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+
+      renderizarGaleria();
+    }
+
+    // Renderizar las prendas en la pantalla según el filtro seleccionado
+    function renderizarGaleria() {
+      const todasLasPrendas = obtenerPrendas();
+      const contenedor = document.getElementById('galeriaProductos');
+      contenedor.innerHTML = '';
+
+      // Filtrar prendas
+      const prendasFiltradas = categoriaActual === "Todas" 
+        ? todasLasPrendas 
+        : todasLasPrendas.filter(item => item.categoria === categoriaActual);
+
+      if (prendasFiltradas.length === 0) {
+        contenedor.innerHTML = `<div class="col-12 text-center py-5 text-muted"><p>No hay prendas publicadas en esta sección aún. ¡Sube una desde el panel de Administrador!</p></div>`;
+        return;
+      }
+
+      prendasFiltradas.forEach((item) => {
+        const col = document.createElement('div');
+        col.className = 'col-12 col-sm-6 col-md-4';
+
+        const mensajeWS = encodeURIComponent(`Hola Confecciones Nishaemia, deseo consultar/cotizar sobre: ${item.titulo}`);
+
+        col.innerHTML = `
+          <div class="gallery-card h-100">
+            ${item.esPersonalizado ? `<button class="btn-delete-card" onclick="borrarPrenda(${item.id})" title="Eliminar este modelo">✕</button>` : ''}
+            
+            <div class="gallery-img-container" onclick="abrirFotoGrande('${item.imagen}', '${item.titulo}', '${item.descripcion}')">
+              <img src="${item.imagen}" class="card-img-top gallery-img" alt="${item.titulo}">
+            </div>
+
+            <div class="p-3 text-center">
+              <span class="category-badge mb-2 d-inline-block">${item.categoria}</span>
+              <h3 class="h6 fw-bold mb-1">${item.titulo}</h3>
+              <p class="small text-muted mb-2">${item.descripcion}</p>
+              <a href="https://wa.me/573001234567?text=${mensajeWS}" target="_blank" class="btn btn-sm btn-outline-danger rounded-pill w-100">
+                <i class="fa-brands fa-whatsapp me-1"></i> Cotizar por WhatsApp
+              </a>
+            </div>
+          </div>
+        `;
+        contenedor.appendChild(col);
+      });
+    }
+
+    // Ampliar imagen en Modal flotante
+    function abrirFotoGrande(url, titulo, descripcion) {
+      document.getElementById('modalVisorImagen').src = url;
+      document.getElementById('modalVisorTitulo').innerText = titulo;
+      document.getElementById('modalVisorDescripcion').innerText = descripcion;
+      
+      const modal = new bootstrap.Modal(document.getElementById('modalVisorFoto'));
+      modal.show();
+    }
+
+    // Modo Administrador
+    function accesoAdministrador() {
+      const claveCorrecta = "admin123";
+      const claveIngresada = prompt("Ingresa la contraseña de Administrador de Confecciones Nishaemia:");
+      
+      if (claveIngresada === claveCorrecta) {
+        document.getElementById("panelAdmin").style.display = "block";
+        window.scrollTo({ top: 150, behavior: 'smooth' });
+      } else if (claveIngresada !== null) {
+        alert("Contraseña incorrecta.");
+      }
+    }
+
+    function cerrarAdmin() {
+      document.getElementById("panelAdmin").style.display = "none";
+    }
+
+    // Subir Nueva Prenda desde Admin
+    document.getElementById('formAdminUpload').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const categoria = document.getElementById('adminCategoria').value;
+      const titulo = document.getElementById('adminTitulo').value;
+      const descripcion = document.getElementById('adminDescripcion').value;
+      const archivoFoto = document.getElementById('adminFoto').files[0];
+
+      if (archivoFoto) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          const nuevaPrenda = {
+            id: Date.now(),
+            categoria: categoria,
+            titulo: titulo,
+            descripcion: descripcion,
+            imagen: event.target.result,
+            esPersonalizado: true
+          };
+
+          const prendas = obtenerPrendas();
+          prendas.unshift(nuevaPrenda);
+          localStorage.setItem('prendasNishaemia_v2', JSON.stringify(prendas));
+
+          // Cambiar a la categoría recién agregada para ver el resultado inmediatamente
+          filtrarCategoria(categoria);
+          cerrarAdmin();
+          document.getElementById('formAdminUpload').reset();
+          alert(`¡Excelente! La foto fue publicada en la sección "${categoria}".`);
+        };
+        reader.readAsDataURL(archivoFoto);
+      }
+    });
+
+    // Eliminar prenda
+    function borrarPrenda(id) {
+      if (confirm("¿Estás segura de eliminar esta prenda del catálogo?")) {
+        let prendas = obtenerPrendas();
+        prendas = prendas.filter(p => p.id !== id);
+        localStorage.setItem('prendasNishaemia_v2', JSON.stringify(prendas));
+        renderizarGaleria();
+      }
+    }
+
+    // Inicialización
+    document.addEventListener('DOMContentLoaded', renderizarGaleria);
+  </script>
+</body>
+</html>
